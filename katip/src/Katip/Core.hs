@@ -545,7 +545,7 @@ sl a b = SimpleLogPayload [(a, AnyLogPayload b)]
 -- | Constrain payload based on verbosity. Backends should use this to
 -- automatically bubble higher verbosity levels to lower ones.
 payloadObject :: LogItem a => Verbosity -> a -> A.Object
-payloadObject verb a = case FT.foldMap (flip payloadKeys a) [(V0)..verb] of
+payloadObject verb a = case FT.foldMap' (flip payloadKeys a) [(V0)..verb] of
     AllKeys     -> toObject a
     SomeKeys ks -> filterElems ks $ toObject a
 
